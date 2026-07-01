@@ -1,0 +1,26 @@
+name: Deploy plus.tidebridges.com
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            APP_DIR=/home/root1/web/plus.tidebridges.com/public_html
+            cd "$APP_DIR"
+            sudo -u root1 git fetch origin
+            sudo -u root1 git reset --hard "origin/$(sudo -u root1 git rev-parse --abbrev-ref HEAD)"
+            sudo -u root1 bash scripts/deploy.sh
