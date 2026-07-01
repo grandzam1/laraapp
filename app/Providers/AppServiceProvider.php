@@ -11,6 +11,7 @@ use App\Models\TermsPrivacy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         FacadesStorage::extend('sftp', function ($app, $config) {
             return new Filesystem(new SftpAdapter($config));
         });

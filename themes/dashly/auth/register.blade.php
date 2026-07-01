@@ -230,7 +230,7 @@
         <div class="col-md-5 col-lg-6 d-none d-lg-block">
             <!-- Image -->
             <div class="bg-size-cover bg-position-center bg-repeat-no-repeat overlay overlay-dark overlay-50 vh-100 me-n4"
-                style="background-image: url(themes/dashly/assets/images/covers/sign-up-cover.jpg);"></div>
+                style="background-image: url({{ asset('themes/dashly/assets/images/covers/sign-up-cover.jpg') }});"></div>
         </div>
     </div> <!-- / .row -->
 @endsection
