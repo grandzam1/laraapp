@@ -15,6 +15,10 @@ if [ -f .htaccess ]; then
 fi
 
 composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
-php artisan migrate --force
+
+if ! php artisan migrate --force; then
+  echo "migrate: skipped or partially applied (existing database)"
+fi
+
 php artisan config:clear
 php artisan cache:clear

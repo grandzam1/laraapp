@@ -20,7 +20,9 @@ jobs:
           script: |
             set -euo pipefail
             APP_DIR=/home/root1/web/plus.tidebridges.com/public_html
+            BRANCH="${{ github.ref_name }}"
             cd "$APP_DIR"
+            chown -R root1:root1 "$APP_DIR"
             sudo -u root1 git fetch origin
-            sudo -u root1 git reset --hard "origin/$(sudo -u root1 git rev-parse --abbrev-ref HEAD)"
+            sudo -u root1 git reset --hard "origin/${BRANCH}"
             sudo -u root1 bash scripts/deploy.sh
